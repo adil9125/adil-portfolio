@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Adil Anwar Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one column, notebook-style. Hero shows the resume as a DataFrame row; sections follow as labelled cells. */
+:root {
+  --bg: #f1f5f4;
+  --surface: #ffffff;
+  --fg: #12201e;
+  --muted: #4f625f;
+  --line: #cfdad7;
+  --accent: #0b6e69;
+  --accent-ink: #ffffff;
+  --mark: #c9771d;
+  --grid: rgba(11, 110, 105, 0.07);
+  --font-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --font-body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0d1614; --surface: #142220; --fg: #e6efed; --muted: #9db3af;
+    --line: #28403c; --accent: #4fc3bb; --accent-ink: #062623; --mark: #e8a255;
+    --grid: rgba(79, 195, 187, 0.06); color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0d1614; --surface: #142220; --fg: #e6efed; --muted: #9db3af;
+  --line: #28403c; --accent: #4fc3bb; --accent-ink: #062623; --mark: #e8a255;
+  --grid: rgba(79, 195, 187, 0.06); color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { color-scheme: light; }
+body { margin: 0; }
+body {
+  background-color: var(--bg);
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 32px 32px;
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  padding-block: 24px 64px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.wrap { max-width: 920px; margin: 0 auto; display: flex; flex-direction: column; gap: 72px; }
+a { color: var(--accent); }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+
+/* top bar */
+.bar { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px 24px; }
+.logo { font-family: var(--font-mono); font-size: 14px; color: var(--muted); }
+.logo b { color: var(--fg); font-weight: 500; }
+nav { display: flex; flex-wrap: wrap; gap: 6px 20px; font-family: var(--font-mono); font-size: 13px; }
+nav a { color: var(--muted); text-decoration: none; }
+nav a:hover { color: var(--accent); }
+
+/* hero */
+.hero { display: flex; flex-direction: column; gap: 28px; }
+.kicker { font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); }
+h1 {
+  font-family: var(--font-display); font-weight: 800; font-size: clamp(40px, 8.5vw, 84px);
+  line-height: 0.98; letter-spacing: -0.03em; margin: 0; text-wrap: balance;
+}
+h1 span { color: var(--accent); }
+.lede { max-width: 62ch; font-size: 18px; color: var(--muted); margin: 0; }
+.frame {
+  background: var(--surface); border: 1px solid var(--line); border-radius: 6px;
+  overflow-x: auto; font-family: var(--font-mono); font-size: 13px;
+}
+.frame .cap { padding: 10px 16px; border-bottom: 1px solid var(--line); color: var(--muted); white-space: nowrap; }
+.frame .cap em { color: var(--mark); font-style: normal; }
+.frame table { border-collapse: collapse; width: 100%; min-width: 620px; }
+.frame th, .frame td { text-align: left; padding: 10px 16px; white-space: nowrap; font-weight: 400; }
+.frame th { color: var(--muted); border-bottom: 1px solid var(--line); }
+.frame td:first-child, .frame th:first-child { color: var(--muted); width: 3ch; }
+.frame td.hi { color: var(--accent); font-weight: 500; }
+.frame .foot { padding: 8px 16px 12px; color: var(--muted); border-top: 1px solid var(--line); }
+
+/* sections */
+.cell { display: grid; grid-template-columns: 148px minmax(0, 1fr); gap: 16px 40px; }
+.tag { font-family: var(--font-mono); font-size: 13px; color: var(--muted); padding-top: 8px; }
+.tag b { display: block; color: var(--accent); font-weight: 500; }
+h2 { font-family: var(--font-display); font-weight: 700; font-size: clamp(26px, 4vw, 36px); line-height: 1.1; letter-spacing: -0.02em; margin: 0 0 20px; text-wrap: balance; }
+.body { min-width: 0; }
+.body p { margin: 0 0 14px; max-width: 65ch; }
+
+/* education bars, drawn on a shared 0-100 scale */
+.scale { display: flex; flex-direction: column; gap: 20px; margin-top: 8px; }
+.row { display: grid; grid-template-columns: minmax(0, 1fr); gap: 6px; }
+.row .top { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 16px; }
+.row .name { font-weight: 600; }
+.row .val { font-family: var(--font-mono); font-variant-numeric: tabular-nums; color: var(--accent); font-weight: 500; }
+.track { height: 10px; background: var(--line); border-radius: 2px; position: relative; }
+.fill { height: 100%; background: var(--accent); border-radius: 2px; }
+.fill.now { background: var(--mark); }
+.ticks { display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 11px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.sub { color: var(--muted); font-size: 14px; }
+
+/* skills */
+.chips { display: flex; flex-wrap: wrap; gap: 10px; padding: 0; margin: 0; list-style: none; }
+.chips li { font-family: var(--font-mono); font-size: 14px; padding: 7px 14px; border: 1px solid var(--line); background: var(--surface); border-radius: 4px; }
+.chips li.lead { border-color: var(--accent); color: var(--accent); font-weight: 500; }
+
+/* projects */
+.proj { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 22px; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.card .file { font-family: var(--font-mono); font-size: 12px; color: var(--muted); display: flex; justify-content: space-between; gap: 12px; }
+.card .file span:last-child { color: var(--mark); }
+.card h3 { font-family: var(--font-display); font-size: 24px; line-height: 1.15; margin: 0; letter-spacing: -0.01em; }
+.card ul { margin: 0; padding-left: 18px; color: var(--muted); display: flex; flex-direction: column; gap: 6px; }
+
+/* contact */
+.contact { display: flex; flex-direction: column; border: 1px solid var(--line); background: var(--surface); border-radius: 6px; }
+.line { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px; padding: 16px 20px; }
+.line + .line { border-top: 1px solid var(--line); }
+.line .k { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); min-width: 80px; }
+.line .v { font-family: var(--font-mono); font-size: 15px; flex: 1 1 200px; min-width: 0; overflow-wrap: anywhere; user-select: all; }
+button.copy {
+  font: inherit; font-family: var(--font-mono); font-size: 13px; cursor: pointer;
+  background: var(--accent); color: var(--accent-ink); border: 0; border-radius: 4px; padding: 7px 14px;
+}
+button.copy:hover { filter: brightness(1.08); }
+footer { font-family: var(--font-mono); font-size: 12px; color: var(--muted); }
+
+@media (max-width: 720px) {
+  .cell { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+  .tag { padding-top: 0; }
+  .tag b { display: inline; margin-right: 8px; }
+  .wrap { gap: 56px; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .fill { transform-origin: left; animation: grow 0.9s ease-out both; }
+  @keyframes grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <header class="bar">
+    <div class="logo"><b>adil_anwar</b>.portfolio</div>
+    <nav aria-label="Sections">
+      <a href="#about">about</a>
+      <a href="#education">education</a>
+      <a href="#skills">skills</a>
+      <a href="#projects">projects</a>
+      <a href="#contact">contact</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="kicker">B.Tech · Data Science &amp; Artificial Intelligence</div>
+    <h1>Chaudhary <span>Adil Anwar</span></h1>
+    <p class="lede">Third-semester student at Integral University, Lucknow. I write Python, C, C++ and SQL, and I build small projects that turn raw academic data into something readable. Looking for an internship in data science and AI.</p>
+
+    <div class="frame" role="region" aria-label="Profile summary" tabindex="0">
+      <div class="cap">&gt;&gt;&gt; profile.head() <em># 1 row × 5 columns</em></div>
+      <table>
+        <thead><tr><th></th><th>name</th><th>program</th><th>semester</th><th>cgpa</th><th>graduation</th></tr></thead>
+        <tbody><tr><td>0</td><td>Adil Anwar</td><td>B.Tech DS &amp; AI</td><td>3</td><td class="hi">7.7</td><td>2029</td></tr></tbody>
+      </table>
+      <div class="foot">Integral University, Lucknow</div>
+    </div>
+  </section>
+
+  <section class="cell" id="about">
+    <div class="tag"><b>In [1]</b>about</div>
+    <div class="body">
+      <h2>Learning to work with data, one project at a time</h2>
+      <p>I am a B.Tech student specialising in Data Science and Artificial Intelligence. My base is programming: Python first, with C, C++ and basic SQL behind it.</p>
+      <p>I am drawn to data science, machine learning and analytics. My goal is to apply what I know on real technical projects, sharpen my analytical skills and keep learning new technologies as I go.</p>
+    </div>
+  </section>
+
+  <section class="cell" id="education">
+    <div class="tag"><b>In [2]</b>education</div>
+    <div class="body">
+      <h2>Education</h2>
+      <p><strong>B.Tech, Data Science &amp; Artificial Intelligence</strong><br><span class="sub">Integral University, Lucknow · 3rd semester · Expected graduation 2029</span></p>
+      <div class="scale" role="img" aria-label="Scores on a 0 to 100 scale: Class X 84 percent, Class XII 74 percent, B.Tech CGPA 7.7 out of 10 shown as 77 percent">
+        <div class="row">
+          <div class="top"><span class="name">B.Tech, current CGPA</span><span class="val">7.7 / 10</span></div>
+          <div class="track"><div class="fill now" style="width:77%"></div></div>
+        </div>
+        <div class="row">
+          <div class="top"><span class="name">Class XII <span class="sub">· ISC Board</span></span><span class="val">74%</span></div>
+          <div class="track"><div class="fill" style="width:74%"></div></div>
+        </div>
+        <div class="row">
+          <div class="top"><span class="name">Class X <span class="sub">· ICSE Board</span></span><span class="val">84%</span></div>
+          <div class="track"><div class="fill" style="width:84%"></div></div>
+        </div>
+        <div class="ticks" aria-hidden="true"><span>0</span><span>25</span><span>50</span><span>75</span><span>100</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cell" id="skills">
+    <div class="tag"><b>In [3]</b>skills</div>
+    <div class="body">
+      <h2>Technical skills</h2>
+      <ul class="chips">
+        <li class="lead">Python</li>
+        <li>C</li>
+        <li>C++</li>
+        <li>SQL (basic)</li>
+        <li>Programming fundamentals</li>
+        <li>Problem solving</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="cell" id="projects">
+    <div class="tag"><b>In [4]</b>projects</div>
+    <div class="body">
+      <h2>Academic projects</h2>
+      <div class="proj">
+        <article class="card">
+          <div class="file"><span>marks_analyser</span><span>Python</span></div>
+          <h3>Marks Analyser</h3>
+          <ul>
+            <li>Python project that analyses student marks.</li>
+            <li>Organises and evaluates academic performance data.</li>
+          </ul>
+        </article>
+        <article class="card">
+          <div class="file"><span>students_skills_analyst</span><span>Python</span></div>
+          <h3>Students Skills Analyst</h3>
+          <ul>
+            <li>Python project that analyses students' skills.</li>
+            <li>Organises and assesses skill-related information about students.</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="cell" id="interests">
+    <div class="tag"><b>In [5]</b>interests</div>
+    <div class="body">
+      <h2>Areas of interest</h2>
+      <ul class="chips">
+        <li>Data Science</li>
+        <li>Artificial Intelligence</li>
+        <li>Machine Learning</li>
+        <li>Data Analytics</li>
+        <li>Software Development</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="cell" id="contact">
+    <div class="tag"><b>In [6]</b>contact</div>
+    <div class="body">
+      <h2>Open to internships and entry-level roles</h2>
+      <p>I am a fresher looking for practical industry experience. Write or call.</p>
+      <div class="contact">
+        <div class="line">
+          <span class="k">Email</span>
+          <span class="v" id="v-email">adilanwar530@gmail.com</span>
+          <button class="copy" type="button" data-target="v-email">Copy</button>
+        </div>
+        <div class="line">
+          <span class="k">Phone</span>
+          <span class="v" id="v-phone">+91 9125371317</span>
+          <button class="copy" type="button" data-target="v-phone">Copy</button>
+        </div>
+        <div class="line">
+          <span class="k">University</span>
+          <span class="v" id="v-uni">Integral University, Lucknow</span>
+          <button class="copy" type="button" data-target="v-uni">Copy</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>© 2026 Chaudhary Adil Anwar</footer>
+</div>
+
+<script>
+document.querySelectorAll('button.copy').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    var el = document.getElementById(btn.dataset.target);
+    var text = el.textContent.trim();
+    var done = function () {
+      btn.textContent = 'Copied';
+      setTimeout(function () { btn.textContent = 'Copy'; }, 1500);
+    };
+    var fallback = function () {
+      var r = document.createRange();
+      r.selectNodeContents(el);
+      var s = window.getSelection();
+      s.removeAllRanges();
+      s.addRange(r);
+      btn.textContent = 'Selected';
+      setTimeout(function () { btn.textContent = 'Copy'; }, 1500);
+    };
+    try {
+      navigator.clipboard.writeText(text).then(done, fallback);
+    } catch (e) {
+      fallback();
+    }
+  });
+});
+</script>
+</body>
+</html>
